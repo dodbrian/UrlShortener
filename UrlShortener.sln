@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener", "UrlShortene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Data", "UrlShortener.Data\UrlShortener.Data.csproj", "{E3D03FEB-7287-4F82-85DC-2AA59FECDF60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Model", "UrlShortener.Model\UrlShortener.Model.csproj", "{8B072EC4-811D-4274-9C84-5E85D2DC8208}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Core", "UrlShortener.Core\UrlShortener.Core.csproj", "{8B072EC4-811D-4274-9C84-5E85D2DC8208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
