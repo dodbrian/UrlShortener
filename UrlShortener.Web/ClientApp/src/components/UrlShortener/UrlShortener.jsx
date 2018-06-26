@@ -14,7 +14,7 @@ class UrlShortener extends Component {
     return (
       <div>
         <h1>URL Shortener</h1>
-        <Tabs>
+        <Tabs id="urlShortenerTabs">
           <Tab eventKey={1} title="Create alias">
             <AliasCreator {...this.props} />
           </Tab>

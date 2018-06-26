@@ -34,11 +34,18 @@ class AliasCreator extends Component {
     this.props.setAlias(event.target.value);
   }
 
+  handleOnSubmit(event) {
+    const { createAlias, originalUrl, alias } = this.props;
+
+    event.preventDefault();
+    createAlias({ originalUrl, alias });
+  }
+
   render() {
     const { protocol } = this.props;
 
     return (
-      <form>
+      <form onSubmit={this.handleOnSubmit.bind(this)}>
         <FormGroup controlId="formOriginalUrl">
           <ControlLabel>Original URL</ControlLabel>
           <InputGroup>
@@ -74,7 +81,10 @@ class AliasCreator extends Component {
             onChange={event => this.handleAliasChange(event)}
           />
         </FormGroup>
-        <Button bsStyle="primary">Create shortened URL</Button>
+        <Button type="submit" bsStyle="primary">
+          Create shortened URL
+        </Button>
+        {this.props.id}
       </form>
     );
   }
