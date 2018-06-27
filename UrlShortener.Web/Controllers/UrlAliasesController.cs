@@ -33,6 +33,7 @@ namespace UrlShortener.Web.Controllers
         [HttpGet("getByAlias/{alias}")]
         public IActionResult GetUrlAliasByAlias(string alias)
         {
+            alias = alias?.Trim();
             if (string.IsNullOrWhiteSpace(alias)) return BadRequest();
 
             var urlAlias = _urlAliasesRepository.GetUrlAliasByAlias(alias);

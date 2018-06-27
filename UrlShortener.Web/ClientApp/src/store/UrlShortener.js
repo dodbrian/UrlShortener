@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 const setOriginalUrlType = 'SET_ORIGINAL_URL_TYPE';
 const setAliasType = 'SET_ALIAS_TYPE';
 
@@ -16,6 +18,7 @@ const failFindByAliasType = 'FAIL_FIND_BY_ALIAS_TYPE';
 
 const initialState = {
   originalUrl: '',
+  urlIsInvalid: true,
   alias: '',
   id: 0
 };
@@ -23,8 +26,13 @@ const initialState = {
 const apiAliasesUrl = 'api/urlaliases';
 
 export const actionCreators = {
-  setOriginalUrl: url => ({ type: setOriginalUrlType, payload: url }),
-  setAlias: alias => ({ type: setAliasType, payload: alias }),
+  setOriginalUrl: url => dispatch => {
+    url = validator.trim(url);
+    const urlIsInvalid = !validator.isURL(url, { require_protocol: true });
+    dispatch({ type: setOriginalUrlType, url, urlIsInvalid });
+  },
+
+  setAlias: alias => ({ type: setAliasType, payload: validator.trim(alias) }),
 
   createAlias: urlAlias => async dispatch => {
     dispatch({ type: requestCreateAliasType });
@@ -98,7 +106,11 @@ export const reducer = (state, action) => {
   state = state || initialState;
 
   if (action.type === setOriginalUrlType) {
-    return { ...state, originalUrl: action.payload };
+    return {
+      ...state,
+      originalUrl: action.url,
+      urlIsInvalid: action.urlIsInvalid
+    };
   }
 
   if (action.type === setAliasType) {
@@ -114,11 +126,11 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveFindByAliasType) {
-    return { ...state, ...action.foundAlias };
+    return { ...state, ...action.foundAlias, urlIsInvalid: false };
   }
 
   if (action.type === failFindByAliasType) {
-    return { ...state, id: 0, originalUrl: '' };
+    return { ...state, id: 0, originalUrl: '', urlIsInvalid: true };
   }
 
   return state;

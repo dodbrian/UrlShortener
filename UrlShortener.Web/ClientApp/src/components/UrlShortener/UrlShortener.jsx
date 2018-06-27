@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import urlParser from 'url-parse';
 
 import {
   FormControl,
@@ -9,20 +8,17 @@ import {
   ControlLabel,
   Button,
   ButtonToolbar,
-  Panel
+  Panel,
+  Label
 } from 'react-bootstrap';
 
 import { actionCreators } from '../../store/UrlShortener';
 
 class UrlShortener extends Component {
   handleUrlChange(event) {
-    let parsedUrl = new urlParser(event.target.value, {});
+    const url = event.target.value;
 
-    this.props.setOriginalUrl(
-      `${parsedUrl.protocol ? parsedUrl.protocol : 'http:'}//${parsedUrl.host}${
-        parsedUrl.pathname
-      }${parsedUrl.query}${parsedUrl.hash}`
-    );
+    this.props.setOriginalUrl(url);
   }
 
   handleAliasChange(event) {
@@ -52,7 +48,10 @@ class UrlShortener extends Component {
   }
 
   render() {
-    const { id, alias, originalUrl } = this.props;
+    const { id, alias, originalUrl, urlIsInvalid } = this.props;
+    const redirectUrl = `${window.location.protocol}//${
+      window.location.host
+    }/${alias}`;
 
     return (
       <div>
@@ -73,15 +72,19 @@ class UrlShortener extends Component {
               onChange={event => this.handleUrlChange(event)}
               value={originalUrl}
             />
+            {urlIsInvalid ? (
+              <Label bsStyle="danger">Please enter a valid URL</Label>
+            ) : (
+              ''
+            )}
           </FormGroup>
           {id !== 0 ? (
             <Panel>
               <Panel.Heading>Generated link</Panel.Heading>
               <Panel.Body>
-                <a
-                  href={`https://localhost:5001/${alias}`}
-                  target="_blank"
-                >{`https://localhost:5001/${alias}`}</a>
+                <a href={redirectUrl} target="_blank">
+                  {redirectUrl}
+                </a>
               </Panel.Body>
             </Panel>
           ) : (
@@ -89,13 +92,21 @@ class UrlShortener extends Component {
           )}
           {id === 0 ? (
             <ButtonToolbar>
-              <Button type="submit" bsStyle="primary">
+              <Button
+                type="submit"
+                bsStyle="primary"
+                disabled={urlIsInvalid || alias === ''}
+              >
                 Create shortened URL
               </Button>
             </ButtonToolbar>
           ) : (
             <ButtonToolbar>
-              <Button type="submit" bsStyle="primary">
+              <Button
+                type="submit"
+                bsStyle="primary"
+                disabled={urlIsInvalid || alias === ''}
+              >
                 Update shortened URL
               </Button>
               <Button
