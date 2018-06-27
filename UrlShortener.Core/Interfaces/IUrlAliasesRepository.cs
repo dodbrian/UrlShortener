@@ -18,6 +18,13 @@ namespace UrlShortener.Core.Interfaces
         UrlAlias GetUrlAlias(long id);
 
         /// <summary>
+        /// Retreives UrlAlias by its name
+        /// </summary>
+        /// <param name="alias">Alias</param>
+        /// <returns>UrlAlias specified by name</returns>
+        UrlAlias GetUrlAliasByAlias(string alias);
+
+        /// <summary>
         /// Deletes UrlAlias
         /// </summary>
         /// <param name="id">UrlAlias identity</param>

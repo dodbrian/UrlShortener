@@ -10,6 +10,10 @@ const receiveUpdateAliasType = 'RECEIVE_UPDATE_ALIAS_TYPE';
 const requestDeleteAliasType = 'REQUEST_DELETE_ALIAS_TYPE';
 const receiveDeleteAliasType = 'RECEIVE_DELETE_ALIAS_TYPE';
 
+const requestFindByAliasType = 'REQUEST_FIND_BY_ALIAS_TYPE';
+const receiveFindByAliasType = 'RECEIVE_FIND_BY_ALIAS_TYPE';
+const failFindByAliasType = 'FAIL_FIND_BY_ALIAS_TYPE';
+
 const initialState = {
   originalUrl: '',
   alias: '',
@@ -72,6 +76,22 @@ export const actionCreators = {
     });
 
     dispatch({ type: receiveDeleteAliasType });
+  },
+
+  findByAlias: alias => async dispatch => {
+    dispatch({ type: requestFindByAliasType });
+
+    const url = `${apiAliasesUrl}/getByAlias/${alias}`;
+
+    try {
+      const response = await fetch(url).catch();
+      if (!response.ok) throw new Error();
+
+      const foundAlias = await response.json();
+      dispatch({ type: receiveFindByAliasType, foundAlias });
+    } catch (error) {
+      dispatch({ type: failFindByAliasType });
+    }
   }
 };
 
@@ -92,6 +112,14 @@ export const reducer = (state, action) => {
 
   if (action.type === receiveDeleteAliasType) {
     return { ...state, id: 0, alias: '', originalUrl: '' };
+  }
+
+  if (action.type === receiveFindByAliasType) {
+    return { ...state, ...action.foundAlias };
+  }
+
+  if (action.type === failFindByAliasType) {
+    return { ...state, id: 0, originalUrl: '' };
   }
 
   return state;

@@ -40,6 +40,11 @@ namespace UrlShortener.Data.Repositories
             return _context.UrlAliases.FirstOrDefault(x => x.Id == id);
         }
 
+        public UrlAlias GetUrlAliasByAlias(string alias)
+        {
+            return _context.UrlAliases.FirstOrDefault(x => x.Alias == alias);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

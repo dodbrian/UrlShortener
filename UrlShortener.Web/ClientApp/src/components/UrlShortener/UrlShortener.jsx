@@ -15,10 +15,6 @@ import {
 import { actionCreators } from '../../store/UrlShortener';
 
 class UrlShortener extends Component {
-  handleProtocolChange(newProtocol) {
-    this.props.setProtocol(newProtocol);
-  }
-
   handleUrlChange(event) {
     let parsedUrl = new urlParser(event.target.value, {});
 
@@ -30,7 +26,11 @@ class UrlShortener extends Component {
   }
 
   handleAliasChange(event) {
-    this.props.setAlias(event.target.value);
+    const { setAlias, findByAlias } = this.props;
+    const alias = event.target.value;
+
+    setAlias(alias);
+    findByAlias(alias);
   }
 
   handleOnSubmit(event) {

@@ -25,7 +25,18 @@ namespace UrlShortener.Web.Controllers
         public IActionResult GetUrlAlias(long id)
         {
             var urlAlias = _urlAliasesRepository.GetUrlAlias(id);
-            if (urlAlias == null) return BadRequest();
+            if (urlAlias == null) return NotFound();
+
+            return Ok(_mapper.Map<UrlAliasDto>(urlAlias));
+        }
+
+        [HttpGet("getByAlias/{alias}")]
+        public IActionResult GetUrlAliasByAlias(string alias)
+        {
+            if (string.IsNullOrWhiteSpace(alias)) return BadRequest();
+
+            var urlAlias = _urlAliasesRepository.GetUrlAliasByAlias(alias);
+            if (urlAlias == null) return NotFound();
 
             return Ok(_mapper.Map<UrlAliasDto>(urlAlias));
         }
@@ -55,7 +66,7 @@ namespace UrlShortener.Web.Controllers
                 return BadRequest();
 
             var urlAlias = _urlAliasesRepository.GetUrlAlias(id);
-            if (urlAlias == null) return BadRequest();
+            if (urlAlias == null) return NotFound();
 
             _mapper.Map(urlAliasDto, urlAlias);
             _urlAliasesRepository.SaveChanges();
@@ -66,7 +77,8 @@ namespace UrlShortener.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteUrlAlias(long id)
         {
-            if (id <= 0 || !_urlAliasesRepository.Exists(id)) return BadRequest();
+            if (id <= 0) return BadRequest();
+            if (!_urlAliasesRepository.Exists(id)) return NotFound();
 
             _urlAliasesRepository.Delete(id);
             _urlAliasesRepository.SaveChanges();
