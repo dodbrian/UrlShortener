@@ -106,7 +106,6 @@ class UrlShortener extends Component {
               </Button>
             </ButtonToolbar>
           )}
-          {this.props.id}
         </form>
       </div>
     );

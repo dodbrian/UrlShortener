@@ -17,8 +17,7 @@ const failFindByAliasType = 'FAIL_FIND_BY_ALIAS_TYPE';
 const initialState = {
   originalUrl: '',
   alias: '',
-  id: 0,
-  isNew: true
+  id: 0
 };
 
 const apiAliasesUrl = 'api/urlaliases';
