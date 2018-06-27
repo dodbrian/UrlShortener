@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import urlParser from 'url-parse';
 
-import { FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap';
+import {
+  FormControl,
+  FormGroup,
+  ControlLabel,
+  Button,
+  ButtonToolbar,
+  Panel
+} from 'react-bootstrap';
 
 import { actionCreators } from '../../store/UrlShortener';
 
@@ -34,6 +41,8 @@ class UrlShortener extends Component {
   }
 
   render() {
+    const { id, alias } = this.props;
+
     return (
       <div>
         <h1>URL Shortener</h1>
@@ -53,9 +62,33 @@ class UrlShortener extends Component {
               value={this.props.originalUrl}
             />
           </FormGroup>
-          <Button type="submit" bsStyle="primary">
-            Create shortened URL
-          </Button>
+          {id !== 0 ? (
+            <Panel>
+              <Panel.Heading>Generated link</Panel.Heading>
+              <Panel.Body>
+                <a
+                  href={`https://localhost:5001/${alias}`}
+                  target="_blank"
+                >{`https://localhost:5001/${alias}`}</a>
+              </Panel.Body>
+            </Panel>
+          ) : (
+            ''
+          )}
+          {id === 0 ? (
+            <ButtonToolbar>
+              <Button type="submit" bsStyle="primary">
+                Create shortened URL
+              </Button>
+            </ButtonToolbar>
+          ) : (
+            <ButtonToolbar>
+              <Button type="submit" bsStyle="primary">
+                Update shortened URL
+              </Button>
+              <Button bsStyle="danger">Delete shortened URL</Button>
+            </ButtonToolbar>
+          )}
           {this.props.id}
         </form>
       </div>
