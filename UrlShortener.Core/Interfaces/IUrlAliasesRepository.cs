@@ -2,6 +2,9 @@ using UrlShortener.Core.Model;
 
 namespace UrlShortener.Core.Interfaces
 {
+    /// <summary>
+    /// UrlAlias repository
+    /// </summary>
     public interface IUrlAliasesRepository
     {
         /// <summary>

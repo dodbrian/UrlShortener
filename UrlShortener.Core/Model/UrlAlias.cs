@@ -1,5 +1,8 @@
 namespace UrlShortener.Core.Model
 {
+    /// <summary>
+    /// UrlAlias model
+    /// </summary>
     public class UrlAlias
     {
         private UrlAlias() { }

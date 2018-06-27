@@ -4,6 +4,9 @@ using UrlShortener.Web.Dto;
 
 namespace UrlShortener.Web.Mapping
 {
+    /// <summary>
+    /// Automapper Profile
+    /// </summary>
     public class UrlShortenerMappingProfile : Profile
     {
         public UrlShortenerMappingProfile()

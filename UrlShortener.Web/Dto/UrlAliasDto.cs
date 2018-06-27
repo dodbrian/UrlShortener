@@ -1,5 +1,8 @@
 namespace UrlShortener.Web.Dto
 {
+    /// <summary>
+    /// General purpose UrlAlias DTO
+    /// </summary>
     public class UrlAliasDto
     {
         /// <summary>
