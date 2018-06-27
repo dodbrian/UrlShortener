@@ -34,10 +34,15 @@ class UrlShortener extends Component {
   }
 
   handleOnSubmit(event) {
-    const { createAlias, originalUrl, alias } = this.props;
+    const { id, createAlias, updateAlias, originalUrl, alias } = this.props;
 
     event.preventDefault();
-    createAlias({ originalUrl, alias });
+
+    if (id === 0) {
+      createAlias({ originalUrl, alias });
+    } else {
+      updateAlias({ id, originalUrl, alias });
+    }
   }
 
   render() {

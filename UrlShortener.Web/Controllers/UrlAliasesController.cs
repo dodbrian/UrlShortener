@@ -44,5 +44,22 @@ namespace UrlShortener.Web.Controllers
 
             return CreatedAtRoute(GetUrlAliasName, new { id = urlAlias.Id }, _mapper.Map<UrlAliasDto>(urlAlias));
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateUrlAlias(long id, [FromBody] UrlAliasUpdateDto urlAliasDto)
+        {
+            if (urlAliasDto == null
+                || string.IsNullOrWhiteSpace(urlAliasDto.OriginalUrl)
+                || string.IsNullOrWhiteSpace(urlAliasDto.Alias))
+                return BadRequest();
+
+            var urlAlias = _urlAliasesRepository.GetUrlAlias(id);
+            if (urlAlias == null) return BadRequest();
+
+            _mapper.Map(urlAliasDto, urlAlias);
+            _urlAliasesRepository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

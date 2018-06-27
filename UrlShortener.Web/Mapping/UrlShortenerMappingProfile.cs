@@ -9,6 +9,7 @@ namespace UrlShortener.Web.Mapping
         public UrlShortenerMappingProfile()
         {
             CreateMap<UrlAliasCreateDto, UrlAlias>();
+            CreateMap<UrlAliasUpdateDto, UrlAlias>();
         }
     }
 }
