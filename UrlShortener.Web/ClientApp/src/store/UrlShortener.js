@@ -7,6 +7,9 @@ const receiveCreateAliasType = 'RECEIVE_CREATE_ALIAS_TYPE';
 const requestUpdateAliasType = 'REQUEST_UPDATE_ALIAS_TYPE';
 const receiveUpdateAliasType = 'RECEIVE_UPDATE_ALIAS_TYPE';
 
+const requestDeleteAliasType = 'REQUEST_DELETE_ALIAS_TYPE';
+const receiveDeleteAliasType = 'RECEIVE_DELETE_ALIAS_TYPE';
+
 const initialState = {
   originalUrl: '',
   alias: '',
@@ -20,7 +23,7 @@ export const actionCreators = {
   setOriginalUrl: url => ({ type: setOriginalUrlType, payload: url }),
   setAlias: alias => ({ type: setAliasType, payload: alias }),
 
-  createAlias: urlAlias => async (dispatch, getState) => {
+  createAlias: urlAlias => async dispatch => {
     dispatch({ type: requestCreateAliasType });
 
     const url = apiAliasesUrl;
@@ -44,7 +47,7 @@ export const actionCreators = {
 
     const url = `${apiAliasesUrl}/${urlAlias.id}`;
 
-    const response = await fetch(url, {
+    await fetch(url, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -53,9 +56,22 @@ export const actionCreators = {
       body: JSON.stringify(urlAlias)
     });
 
-    await response.json();
-
     dispatch({ type: receiveUpdateAliasType });
+  },
+
+  deleteAlias: id => async dispatch => {
+    dispatch({ type: requestDeleteAliasType });
+
+    const url = `${apiAliasesUrl}/${id}`;
+
+    await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json'
+      }
+    });
+
+    dispatch({ type: receiveDeleteAliasType });
   }
 };
 
@@ -72,6 +88,10 @@ export const reducer = (state, action) => {
 
   if (action.type === receiveCreateAliasType) {
     return { ...state, id: action.createdAlias.id };
+  }
+
+  if (action.type === receiveDeleteAliasType) {
+    return { ...state, id: 0, alias: '', originalUrl: '' };
   }
 
   return state;

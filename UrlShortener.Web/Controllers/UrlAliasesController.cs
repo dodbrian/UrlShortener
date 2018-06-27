@@ -48,7 +48,8 @@ namespace UrlShortener.Web.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateUrlAlias(long id, [FromBody] UrlAliasUpdateDto urlAliasDto)
         {
-            if (urlAliasDto == null
+            if (id <= 0
+                || urlAliasDto == null
                 || string.IsNullOrWhiteSpace(urlAliasDto.OriginalUrl)
                 || string.IsNullOrWhiteSpace(urlAliasDto.Alias))
                 return BadRequest();
@@ -57,6 +58,17 @@ namespace UrlShortener.Web.Controllers
             if (urlAlias == null) return BadRequest();
 
             _mapper.Map(urlAliasDto, urlAlias);
+            _urlAliasesRepository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUrlAlias(long id)
+        {
+            if (id <= 0 || !_urlAliasesRepository.Exists(id)) return BadRequest();
+
+            _urlAliasesRepository.Delete(id);
             _urlAliasesRepository.SaveChanges();
 
             return NoContent();

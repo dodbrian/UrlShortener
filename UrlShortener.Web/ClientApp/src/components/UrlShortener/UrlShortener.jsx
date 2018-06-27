@@ -45,8 +45,14 @@ class UrlShortener extends Component {
     }
   }
 
+  handleDeleteAlias() {
+    const { id, deleteAlias } = this.props;
+
+    deleteAlias(id);
+  }
+
   render() {
-    const { id, alias } = this.props;
+    const { id, alias, originalUrl } = this.props;
 
     return (
       <div>
@@ -57,6 +63,7 @@ class UrlShortener extends Component {
             <FormControl
               placeholder="Please, enter shortened alias here"
               onChange={event => this.handleAliasChange(event)}
+              value={alias}
             />
           </FormGroup>
           <FormGroup controlId="formOriginalUrl">
@@ -64,7 +71,7 @@ class UrlShortener extends Component {
             <FormControl
               placeholder="Please, enter original URL here"
               onChange={event => this.handleUrlChange(event)}
-              value={this.props.originalUrl}
+              value={originalUrl}
             />
           </FormGroup>
           {id !== 0 ? (
@@ -91,7 +98,12 @@ class UrlShortener extends Component {
               <Button type="submit" bsStyle="primary">
                 Update shortened URL
               </Button>
-              <Button bsStyle="danger">Delete shortened URL</Button>
+              <Button
+                bsStyle="danger"
+                onClick={this.handleDeleteAlias.bind(this)}
+              >
+                Delete shortened URL
+              </Button>
             </ButtonToolbar>
           )}
           {this.props.id}
