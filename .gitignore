@@ -238,3 +238,6 @@ _Pvt_Extensions
 
 # Published files
 out/
+
+# Rider
+.idea/
