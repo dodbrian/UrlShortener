@@ -23,9 +23,9 @@ namespace UrlShortener.Core.Interfaces
         /// <summary>
         /// Retrieves UrlAlias by its name
         /// </summary>
-        /// <param name="alias">Alias</param>
+        /// <param name="urlAlias">Alias</param>
         /// <returns>UrlAlias specified by name</returns>
-        UrlAlias GetUrlAliasByAlias(string alias);
+        UrlAlias GetUrlAliasByAlias(string urlAlias);
 
         /// <summary>
         /// Deletes UrlAlias
