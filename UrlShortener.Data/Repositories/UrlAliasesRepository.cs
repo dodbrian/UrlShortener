@@ -24,7 +24,7 @@ namespace UrlShortener.Data.Repositories
 
         public void Delete(long id)
         {
-            var urlAlias = _context.UrlAliases.FirstOrDefault(x => x.Id == id);
+            var urlAlias = _context.UrlAliases.FirstOrDefault(alias => alias.Id == id);
             if (urlAlias == null) return;
 
             _context.UrlAliases.Remove(urlAlias);
@@ -32,17 +32,18 @@ namespace UrlShortener.Data.Repositories
 
         public bool Exists(long id)
         {
-            return _context.UrlAliases.Any(x => x.Id == id);
+            return _context.UrlAliases.Any(alias => alias.Id == id);
         }
 
         public UrlAlias GetUrlAlias(long id)
         {
-            return _context.UrlAliases.FirstOrDefault(x => x.Id == id);
+            return _context.UrlAliases.FirstOrDefault(alias => alias.Id == id);
         }
 
-        public UrlAlias GetUrlAliasByAlias(string alias)
+        public UrlAlias GetUrlAliasByAlias(string urlAlias)
         {
-            return _context.UrlAliases.FirstOrDefault(x => x.Alias == alias);
+            return _context.UrlAliases
+                .FirstOrDefault(alias => alias.Alias == urlAlias);
         }
 
         public void SaveChanges()

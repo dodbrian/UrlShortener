@@ -28,7 +28,7 @@ namespace UrlShortener.Web.Controllers
         /// Returns UrlAlias by Id
         /// </summary>
         /// <param name="id">UrlAlias identity</param>
-        /// <returns>Opertaion result</returns>
+        /// <returns>Operation result</returns>
         [HttpGet("{id}", Name = GetUrlAliasName)]
         public IActionResult GetUrlAlias(long id)
         {
@@ -42,7 +42,7 @@ namespace UrlShortener.Web.Controllers
         /// Returns UrlAlias by its name
         /// </summary>
         /// <param name="alias">UrlAlias name</param>
-        /// <returns>Opertaion result</returns>
+        /// <returns>Operation result</returns>
         [HttpGet("getByAlias/{alias}")]
         public IActionResult GetUrlAliasByAlias(string alias)
         {
@@ -59,7 +59,7 @@ namespace UrlShortener.Web.Controllers
         /// Creates new UrlAlias
         /// </summary>
         /// <param name="urlAliasDto">UrlAlias to be created</param>
-        /// <returns>Opertaion result</returns>
+        /// <returns>Operation result</returns>
         [HttpPost]
         public IActionResult CreateUrlAlias([FromBody] UrlAliasCreateDto urlAliasDto)
         {
@@ -80,7 +80,7 @@ namespace UrlShortener.Web.Controllers
         /// </summary>
         /// <param name="id">UrlAlias identity</param>
         /// <param name="urlAliasDto">UrlAlias to be updated</param>
-        /// <returns>Opertaion result</returns>
+        /// <returns>Operation result</returns>
         [HttpPut("{id}")]
         public IActionResult UpdateUrlAlias(long id, [FromBody] UrlAliasUpdateDto urlAliasDto)
         {
@@ -103,7 +103,7 @@ namespace UrlShortener.Web.Controllers
         /// Deletes existing UrlAlias
         /// </summary>
         /// <param name="id">UrlAlias identity</param>
-        /// <returns>Opertaion result</returns>
+        /// <returns>Operation result</returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteUrlAlias(long id)
         {
